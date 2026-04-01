@@ -1,0 +1,3 @@
+# Padrao de estrategia
+
+TODO

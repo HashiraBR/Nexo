@@ -1,0 +1,12 @@
+#ifndef EA_STOPTYPES_MQH
+#define EA_STOPTYPES_MQH
+
+enum StopType
+{
+   STOP_FIXED = 0,
+   STOP_TRAILING = 1,
+   STOP_BREAK_EVEN = 2,
+   STOP_PROGRESSIVE = 3
+};
+
+#endif // EA_STOPTYPES_MQH
