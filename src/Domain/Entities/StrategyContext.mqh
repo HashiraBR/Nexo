@@ -10,6 +10,7 @@ class StrategyContext
 public:
    string   id;
    bool     enabled;
+   bool     debug;
    int      max_orders;
    int      max_hold_minutes;
    int      pending_ttl_minutes;

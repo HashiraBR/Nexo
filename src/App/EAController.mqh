@@ -436,6 +436,7 @@ private:
       ctx2.ma_short_period = m_config.strat2_ma_short_period;
       ctx2.ma_long_period = m_config.strat2_ma_long_period;
       ctx2.ma_dist = m_config.strat2_ma_dist;
+      ctx2.debug = m_config.strat2_debug;
       ctx2.lower_zone = m_config.strat2_lower_zone;
       ctx2.upper_zone = m_config.strat2_upper_zone;
       ctx2.sl_atr_factor = m_config.strat2_sl_atr_factor;

@@ -184,7 +184,7 @@ private:
                             MathAbs(m_current_dt.dtosc - m_current_dt.dtoss) >= m_dt_distance;
       const bool below_zone = m_current_dt.dtosc < m_lower_zone && m_current_dt.dtoss < m_lower_zone;
       const bool price_above = m_last_close > m_ema_short;
-      const bool pattern_ok = IsBuyPatternSignal(m_last_pattern);
+      const bool pattern_ok = true;//IsBuyPatternSignal(m_last_pattern);
       const bool signal = cross_up && below_zone && price_above && up_trend && pattern_ok;
       if(m_debug)
       {
@@ -206,7 +206,7 @@ private:
                               MathAbs(m_current_dt.dtosc - m_current_dt.dtoss) >= m_dt_distance;
       const bool above_zone = m_current_dt.dtosc > m_upper_zone && m_current_dt.dtoss > m_upper_zone;
       const bool price_below = m_last_close < m_ema_short;
-      const bool pattern_ok = IsSellPatternSignal(m_last_pattern);
+      const bool pattern_ok = true;//IsSellPatternSignal(m_last_pattern);
       const bool signal = cross_down && above_zone && price_below && down_trend && pattern_ok;
       if(m_debug)
       {
@@ -257,6 +257,7 @@ public:
       StrategyBase::Configure(ctx);
       m_symbol = ctx.symbol;
       m_timeframe = ctx.timeframe;
+      m_debug = ctx.debug;
       m_rsi_period = ctx.rsi_period;
       m_stoch_period = ctx.stoch_period;
       m_slowing_period = ctx.slowing_period;
@@ -276,12 +277,31 @@ public:
    void OnNewCandle(const double atr, const MarketSnapshot &market, const MarketHistory &history)
    {
       m_last_signal = 0;
+      if(m_debug)
+      {
+         Print("DT OnNewCandle symbol=", market.symbol,
+               " tf=", EnumToString(m_timeframe),
+               " atr=", DoubleToString(atr, 5),
+               " history=", history.count);
+      }
       if(!enabled)
+      {
+         if(m_debug)
+            Print("DT skip: strategy disabled");
          return;
+      }
       if(atr <= 0.0)
+      {
+         if(m_debug)
+            Print("DT skip: atr invalid", DoubleToString(atr, 5));
          return;
+      }
       if(history.count <= 0)
+      {
+         if(m_debug)
+            Print("DT skip: history empty");
          return;
+      }
       m_last_atr = atr;
       if(m_symbol == "")
          m_symbol = market.symbol;
@@ -299,8 +319,20 @@ public:
          market.point,
          market.symbol
       );
+      if(m_debug)
+      {
+         Print("DT pattern=", GetCandlePatternName(m_last_pattern),
+               " atr=", DoubleToString(m_last_atr, 5),
+               " point=", DoubleToString(market.point, 6),
+               " close=", DoubleToString(candle.close, 5),
+               " open=", DoubleToString(candle.open, 5));
+      }
       if(!UpdateData(candle.close))
+      {
+         if(m_debug)
+            Print("DT skip: UpdateData failed");
          return;
+      }
       if(IsBuySignalInternal())
          m_last_signal = 1;
       else if(IsSellSignalInternal())

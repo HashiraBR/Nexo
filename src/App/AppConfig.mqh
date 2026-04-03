@@ -51,6 +51,7 @@ struct AppConfig
    int      strat1_tp_type;
 
    bool     strat2_enabled;
+   bool     strat2_debug;
    int      strat2_max_orders;
    int      strat2_pending_ttl_minutes;
    int      strat2_max_hold_minutes;

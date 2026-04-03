@@ -110,6 +110,7 @@ input double InpStrat2TrailingAtr = 1.0; //Fator ATR do trailing
 input double InpStrat2BreakEvenTriggerAtr = 1.0; //ATR necessario para break-even
 input double InpStrat2ProgressiveTriggerAtr = 1.8; //ATR para salto progressivo
 input double InpStrat2ProgressiveStepAtr = 1.0; //ATR de salto do SL
+input bool InpStrat2Debug = false; //Habilita logs detalhados da estrategia DT
 
 input string InpDividerStrategy3 = "===================";  //#### Estrategia Trend Accelerator ####
 input bool InpStrat3Enabled = true;     //Ativar estrategia Trend Accelerator
@@ -281,6 +282,7 @@ int OnInit()
    config.strat2_ma_short_period = InpStrat2MaShortPeriod;
    config.strat2_ma_long_period = InpStrat2MaLongPeriod;
    config.strat2_ma_dist       = InpStrat2MaDist;
+   config.strat2_debug         = InpStrat2Debug;
    config.strat2_lower_zone    = InpStrat2LowerZone;
    config.strat2_upper_zone    = InpStrat2UpperZone;
    config.strat2_sl_atr_factor = InpStrat2SLAtrFactor;
