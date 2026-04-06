@@ -293,6 +293,29 @@ Nexo/
 - Notificacoes e log (habilitar e-mail/push/arquivo)
 - Tester (inputs finais): criterio de otimizacao, restricao de drawdown e share do forward
 
-## Observacoes
-- Este README deve ser atualizado sempre que novos requisitos forem implementados.
-- As estrategias implementadas (ADX, DT Oscillator, Trend Accelerator, Candle Wave, Trend Reversal, Outsider Bar) devem permanecer consistentes com os inputs e logs.
+## Automacao de testes no Strategy Tester
+
+Para organizar testes automatizados no tester do MT5 criamos uma estrutura em `tests/automation`:
+
+- `tests/automation/inputs/` deve receber os arquivos `.ini` que configuram cada execução (EA, timeframe, periodo, otimizacao, etc.).
+- `tests/automation/reports/` recebe os relatórios `.htm` copiados logo após cada teste.
+
+O script `tools/run-tester-tests.ps1` percorre todos os `.ini` dentro de `tests/automation/inputs`, dispara o terminal MT5 com `/config:<ini>` e copia o novo `.htm` gerado da pasta de resultados para `tests/automation/reports`. Ele aceita parâmetros opcionais:
+
+```
+pwsh tools/run-tester-tests.ps1 `
+  -TerminalPath 'C:\Program Files\MetaTrader 5\terminal64.exe' `
+  -InputsDir tests/automation/inputs `
+  -ReportsDir tests/automation/reports `
+  -TesterFilesDir "$env:APPDATA\MetaQuotes\Terminal\<INSTANCE>\MQL5\Tester\Files" `
+  -ExtraTerminalArgs '/quit' # ou outros parâmetros que queira passar
+```
+
+Como o MT5 escreve os `.htm` em uma pasta conhecida, informe o caminho correto em `-TesterFilesDir` para que o script possa copiar o relatório e renomeá-lo com o mesmo nome do `.ini`. Se preferir, mantenha os parâmetros padrões e certifique-se de que o script consegue localizar `terminal64.exe` e a pasta de relatórios.
+
+O fluxo típico é:
+1. colocar cada cenário em um `.ini` dentro de `tests/automation/inputs`;
+2. rodar `tools/run-tester-tests.ps1` (pode ser agendado);
+3. os relatórios recém gerados vão para `tests/automation/reports` com nomes únicos (`<iniBase>_<timestamp>.htm`) e os arquivos auxiliares como `<iniBase>_<timestamp>.xml` também são copiados.
+
+Essa automação facilita cronogramas de teste contínuo e mantém os assets separados do código principal.

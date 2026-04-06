@@ -63,252 +63,252 @@ public:
          return false;
       }
 
-      if(cfg.strat1_max_orders < 0 || cfg.strat2_max_orders < 0 ||
-         cfg.strat3_max_orders < 0 || cfg.strat4_max_orders < 0 ||
-         cfg.strat5_max_orders < 0 || cfg.strat6_max_orders < 0)
+      if(cfg.adx_max_orders < 0 || cfg.dtosc_max_orders < 0 ||
+         cfg.trend_accel_max_orders < 0 || cfg.candle_wave_max_orders < 0 ||
+         cfg.trend_reversal_max_orders < 0 || cfg.outsider_bar_max_orders < 0)
       {
          out_error = "Invalid strategy max orders";
          return false;
       }
-      if(cfg.strat2_rsi_period <= 0 || cfg.strat2_stoch_period <= 0)
+      if(cfg.dtosc_rsi_period <= 0 || cfg.dtosc_stoch_period <= 0)
       {
          out_error = "Invalid DT RSI/Stoch period";
          return false;
       }
-      if(cfg.strat2_slowing_period <= 0 || cfg.strat2_signal_period <= 0)
+      if(cfg.dtosc_slowing_period <= 0 || cfg.dtosc_signal_period <= 0)
       {
          out_error = "Invalid DT smoothing/signal period";
          return false;
       }
-      if(cfg.strat2_dt_distance < 0.0)
+      if(cfg.dtosc_dt_distance < 0.0)
       {
          out_error = "Invalid DT distance";
          return false;
       }
-      if(cfg.strat2_ma_short_period <= 0 || cfg.strat2_ma_long_period <= 0)
+      if(cfg.dtosc_ma_short_period <= 0 || cfg.dtosc_ma_long_period <= 0)
       {
          out_error = "Invalid DT EMA period";
          return false;
       }
-      if(cfg.strat2_ma_dist < 0.0)
+      if(cfg.dtosc_ma_dist < 0.0)
       {
          out_error = "Invalid DT EMA distance";
          return false;
       }
-      if(cfg.strat3_rsi_period <= 0)
+      if(cfg.trend_accel_rsi_period <= 0)
       {
          out_error = "Invalid Trend Accelerator RSI period";
          return false;
       }
-      if(cfg.strat3_rsi_lower < 0 || cfg.strat3_rsi_upper > 100 ||
-         cfg.strat3_rsi_lower >= cfg.strat3_rsi_upper)
+      if(cfg.trend_accel_rsi_lower < 0 || cfg.trend_accel_rsi_upper > 100 ||
+         cfg.trend_accel_rsi_lower >= cfg.trend_accel_rsi_upper)
       {
          out_error = "Invalid Trend Accelerator RSI limits";
          return false;
       }
-      if(cfg.strat3_ma_short_period <= 0 || cfg.strat3_ma_long_period <= 0)
+      if(cfg.trend_accel_ma_short_period <= 0 || cfg.trend_accel_ma_long_period <= 0)
       {
          out_error = "Invalid Trend Accelerator EMA period";
          return false;
       }
-      if(cfg.strat3_ma_dist < 0.0)
+      if(cfg.trend_accel_ma_dist < 0.0)
       {
          out_error = "Invalid Trend Accelerator EMA distance";
          return false;
       }
-      if(cfg.strat3_accel_dist < 0.0)
+      if(cfg.trend_accel_accel_dist < 0.0)
       {
          out_error = "Invalid Trend Accelerator acceleration distance";
          return false;
       }
-      if(cfg.strat4_volume_avg_period < 0)
+      if(cfg.candle_wave_volume_avg_period < 0)
       {
          out_error = "Invalid Candle Wave volume period";
          return false;
       }
-      if(cfg.strat4_trend_ma_period < 0)
+      if(cfg.candle_wave_trend_ma_period < 0)
       {
          out_error = "Invalid Candle Wave MA period";
          return false;
       }
       for(int i = 1; i < CANDLE_PATTERN_COUNT; ++i)
       {
-         if(cfg.strat4_pattern_configs[i].min_atr < 0.0 ||
-            cfg.strat4_pattern_configs[i].max_atr < 0.0)
+         if(cfg.candle_wave_pattern_configs[i].min_atr < 0.0 ||
+            cfg.candle_wave_pattern_configs[i].max_atr < 0.0)
          {
             out_error = "Invalid Candle Wave pattern ATR range";
             return false;
          }
-         if(cfg.strat4_pattern_configs[i].max_atr > 0.0 &&
-            cfg.strat4_pattern_configs[i].max_atr < cfg.strat4_pattern_configs[i].min_atr)
+         if(cfg.candle_wave_pattern_configs[i].max_atr > 0.0 &&
+            cfg.candle_wave_pattern_configs[i].max_atr < cfg.candle_wave_pattern_configs[i].min_atr)
          {
             out_error = "Invalid Candle Wave pattern ATR bounds";
             return false;
          }
       }
-      if(cfg.strat5_volume_avg_period < 0)
+      if(cfg.trend_reversal_volume_avg_period < 0)
       {
          out_error = "Invalid Trend Reversal volume period";
          return false;
       }
-      if(cfg.strat5_trend_ma_period <= 0)
+      if(cfg.trend_reversal_trend_ma_period <= 0)
       {
          out_error = "Invalid Trend Reversal EMA period";
          return false;
       }
-      if(cfg.strat5_candle_long_percent < 0.0)
+      if(cfg.trend_reversal_candle_long_percent < 0.0)
       {
          out_error = "Invalid Trend Reversal candle long percent";
          return false;
       }
-      if(cfg.strat5_candle_max_atr <= 0.0)
+      if(cfg.trend_reversal_candle_max_atr <= 0.0)
       {
          out_error = "Invalid Trend Reversal candle max ATR";
          return false;
       }
-      if(cfg.strat6_ma_period <= 0)
+      if(cfg.outsider_bar_ma_period <= 0)
       {
          out_error = "Invalid Outsider Bar EMA period";
          return false;
       }
-      if(cfg.strat6_rsi_period <= 0)
+      if(cfg.outsider_bar_rsi_period <= 0)
       {
          out_error = "Invalid Outsider Bar RSI period";
          return false;
       }
-      if(cfg.strat6_rsi_buy_low < 0 || cfg.strat6_rsi_buy_high > 100 ||
-         cfg.strat6_rsi_sell_low < 0 || cfg.strat6_rsi_sell_high > 100)
+      if(cfg.outsider_bar_rsi_buy_low < 0 || cfg.outsider_bar_rsi_buy_high > 100 ||
+         cfg.outsider_bar_rsi_sell_low < 0 || cfg.outsider_bar_rsi_sell_high > 100)
       {
          out_error = "Invalid Outsider Bar RSI limits";
          return false;
       }
-      if(cfg.strat6_rsi_buy_low >= cfg.strat6_rsi_buy_high ||
-         cfg.strat6_rsi_sell_low >= cfg.strat6_rsi_sell_high)
+      if(cfg.outsider_bar_rsi_buy_low >= cfg.outsider_bar_rsi_buy_high ||
+         cfg.outsider_bar_rsi_sell_low >= cfg.outsider_bar_rsi_sell_high)
       {
          out_error = "Invalid Outsider Bar RSI limits";
          return false;
       }
-      if(cfg.strat6_body_ratio <= 0.0 || cfg.strat6_body_ratio > 1.0)
+      if(cfg.outsider_bar_body_ratio <= 0.0 || cfg.outsider_bar_body_ratio > 1.0)
       {
          out_error = "Invalid Outsider Bar body ratio";
          return false;
       }
-      if(cfg.strat6_safe_range < 0.0)
+      if(cfg.outsider_bar_safe_range < 0.0)
       {
          out_error = "Invalid Outsider Bar safe range";
          return false;
       }
-      if(cfg.strat2_lower_zone < 0 || cfg.strat2_upper_zone < 0 ||
-         cfg.strat2_lower_zone >= cfg.strat2_upper_zone)
+      if(cfg.dtosc_lower_zone < 0 || cfg.dtosc_upper_zone < 0 ||
+         cfg.dtosc_lower_zone >= cfg.dtosc_upper_zone)
       {
          out_error = "Invalid DT zones";
          return false;
       }
-      if(cfg.strat1_pending_ttl_minutes < 0 || cfg.strat2_pending_ttl_minutes < 0 ||
-         cfg.strat3_pending_ttl_minutes < 0 || cfg.strat4_pending_ttl_minutes < 0 ||
-         cfg.strat5_pending_ttl_minutes < 0 || cfg.strat6_pending_ttl_minutes < 0)
+      if(cfg.adx_pending_ttl_minutes < 0 || cfg.dtosc_pending_ttl_minutes < 0 ||
+         cfg.trend_accel_pending_ttl_minutes < 0 || cfg.candle_wave_pending_ttl_minutes < 0 ||
+         cfg.trend_reversal_pending_ttl_minutes < 0 || cfg.outsider_bar_pending_ttl_minutes < 0)
       {
          out_error = "Invalid pending TTL";
          return false;
       }
-      if(cfg.strat1_max_hold_minutes < 0 || cfg.strat2_max_hold_minutes < 0 ||
-         cfg.strat3_max_hold_minutes < 0 || cfg.strat4_max_hold_minutes < 0 ||
-         cfg.strat5_max_hold_minutes < 0 || cfg.strat6_max_hold_minutes < 0)
+      if(cfg.adx_max_hold_minutes < 0 || cfg.dtosc_max_hold_minutes < 0 ||
+         cfg.trend_accel_max_hold_minutes < 0 || cfg.candle_wave_max_hold_minutes < 0 ||
+         cfg.trend_reversal_max_hold_minutes < 0 || cfg.outsider_bar_max_hold_minutes < 0)
       {
          out_error = "Invalid max hold minutes";
          return false;
       }
-      if(cfg.strat1_sl_atr_factor <= 0.0 || cfg.strat2_sl_atr_factor <= 0.0 ||
-         cfg.strat3_sl_atr_factor <= 0.0 || cfg.strat4_sl_atr_factor <= 0.0 ||
-         cfg.strat5_sl_atr_factor <= 0.0 || cfg.strat6_sl_atr_factor <= 0.0)
+      if(cfg.adx_sl_atr_factor <= 0.0 || cfg.dtosc_sl_atr_factor <= 0.0 ||
+         cfg.trend_accel_sl_atr_factor <= 0.0 || cfg.candle_wave_sl_atr_factor <= 0.0 ||
+         cfg.trend_reversal_sl_atr_factor <= 0.0 || cfg.outsider_bar_sl_atr_factor <= 0.0)
       {
          out_error = "Invalid SL ATR factor";
          return false;
       }
-      if(cfg.strat1_tp_atr_factor <= 0.0 || cfg.strat2_tp_atr_factor <= 0.0 ||
-         cfg.strat3_tp_atr_factor <= 0.0 || cfg.strat4_tp_atr_factor <= 0.0 ||
-         cfg.strat5_tp_atr_factor <= 0.0 || cfg.strat6_tp_atr_factor <= 0.0)
+      if(cfg.adx_tp_atr_factor <= 0.0 || cfg.dtosc_tp_atr_factor <= 0.0 ||
+         cfg.trend_accel_tp_atr_factor <= 0.0 || cfg.candle_wave_tp_atr_factor <= 0.0 ||
+         cfg.trend_reversal_tp_atr_factor <= 0.0 || cfg.outsider_bar_tp_atr_factor <= 0.0)
       {
          out_error = "Invalid TP ATR factor";
          return false;
       }
-      if(cfg.strat1_trailing_atr_factor < 0.0 || cfg.strat2_trailing_atr_factor < 0.0 ||
-         cfg.strat3_trailing_atr_factor < 0.0 || cfg.strat4_trailing_atr_factor < 0.0 ||
-         cfg.strat5_trailing_atr_factor < 0.0 || cfg.strat6_trailing_atr_factor < 0.0)
+      if(cfg.adx_trailing_atr_factor < 0.0 || cfg.dtosc_trailing_atr_factor < 0.0 ||
+         cfg.trend_accel_trailing_atr_factor < 0.0 || cfg.candle_wave_trailing_atr_factor < 0.0 ||
+         cfg.trend_reversal_trailing_atr_factor < 0.0 || cfg.outsider_bar_trailing_atr_factor < 0.0)
       {
          out_error = "Invalid trailing ATR factor";
          return false;
       }
-      if(cfg.strat1_breakeven_trigger_atr < 0.0 || cfg.strat2_breakeven_trigger_atr < 0.0 ||
-         cfg.strat3_breakeven_trigger_atr < 0.0 || cfg.strat4_breakeven_trigger_atr < 0.0 ||
-         cfg.strat5_breakeven_trigger_atr < 0.0 || cfg.strat6_breakeven_trigger_atr < 0.0)
+      if(cfg.adx_breakeven_trigger_atr < 0.0 || cfg.dtosc_breakeven_trigger_atr < 0.0 ||
+         cfg.trend_accel_breakeven_trigger_atr < 0.0 || cfg.candle_wave_breakeven_trigger_atr < 0.0 ||
+         cfg.trend_reversal_breakeven_trigger_atr < 0.0 || cfg.outsider_bar_breakeven_trigger_atr < 0.0)
       {
          out_error = "Invalid break-even trigger";
          return false;
       }
-      if(cfg.strat1_progressive_trigger_atr < 0.0 || cfg.strat2_progressive_trigger_atr < 0.0 ||
-         cfg.strat3_progressive_trigger_atr < 0.0 || cfg.strat4_progressive_trigger_atr < 0.0 ||
-         cfg.strat5_progressive_trigger_atr < 0.0 || cfg.strat6_progressive_trigger_atr < 0.0)
+      if(cfg.adx_progressive_trigger_atr < 0.0 || cfg.dtosc_progressive_trigger_atr < 0.0 ||
+         cfg.trend_accel_progressive_trigger_atr < 0.0 || cfg.candle_wave_progressive_trigger_atr < 0.0 ||
+         cfg.trend_reversal_progressive_trigger_atr < 0.0 || cfg.outsider_bar_progressive_trigger_atr < 0.0)
       {
          out_error = "Invalid progressive trigger";
          return false;
       }
-      if(cfg.strat1_progressive_step_atr < 0.0 || cfg.strat2_progressive_step_atr < 0.0 ||
-         cfg.strat3_progressive_step_atr < 0.0 || cfg.strat4_progressive_step_atr < 0.0 ||
-         cfg.strat5_progressive_step_atr < 0.0 || cfg.strat6_progressive_step_atr < 0.0)
+      if(cfg.adx_progressive_step_atr < 0.0 || cfg.dtosc_progressive_step_atr < 0.0 ||
+         cfg.trend_accel_progressive_step_atr < 0.0 || cfg.candle_wave_progressive_step_atr < 0.0 ||
+         cfg.trend_reversal_progressive_step_atr < 0.0 || cfg.outsider_bar_progressive_step_atr < 0.0)
       {
          out_error = "Invalid progressive step";
          return false;
       }
-      if(cfg.strat1_progressive_step_atr > 0.0 && cfg.strat1_progressive_trigger_atr > 0.0 &&
-         cfg.strat1_progressive_step_atr > cfg.strat1_progressive_trigger_atr)
+      if(cfg.adx_progressive_step_atr > 0.0 && cfg.adx_progressive_trigger_atr > 0.0 &&
+         cfg.adx_progressive_step_atr > cfg.adx_progressive_trigger_atr)
       {
-         out_error = "Progressive step must be <= trigger (strat1)";
+         out_error = "Progressive step must be <= trigger (ADX)";
          return false;
       }
-      if(cfg.strat2_progressive_step_atr > 0.0 && cfg.strat2_progressive_trigger_atr > 0.0 &&
-         cfg.strat2_progressive_step_atr > cfg.strat2_progressive_trigger_atr)
+      if(cfg.dtosc_progressive_step_atr > 0.0 && cfg.dtosc_progressive_trigger_atr > 0.0 &&
+         cfg.dtosc_progressive_step_atr > cfg.dtosc_progressive_trigger_atr)
       {
-         out_error = "Progressive step must be <= trigger (strat2)";
+         out_error = "Progressive step must be <= trigger (DTOSC)";
          return false;
       }
-      if(cfg.strat3_progressive_step_atr > 0.0 && cfg.strat3_progressive_trigger_atr > 0.0 &&
-         cfg.strat3_progressive_step_atr > cfg.strat3_progressive_trigger_atr)
+      if(cfg.trend_accel_progressive_step_atr > 0.0 && cfg.trend_accel_progressive_trigger_atr > 0.0 &&
+         cfg.trend_accel_progressive_step_atr > cfg.trend_accel_progressive_trigger_atr)
       {
-         out_error = "Progressive step must be <= trigger (strat3)";
+         out_error = "Progressive step must be <= trigger (TACCEL)";
          return false;
       }
-      if(cfg.strat4_progressive_step_atr > 0.0 && cfg.strat4_progressive_trigger_atr > 0.0 &&
-         cfg.strat4_progressive_step_atr > cfg.strat4_progressive_trigger_atr)
+      if(cfg.candle_wave_progressive_step_atr > 0.0 && cfg.candle_wave_progressive_trigger_atr > 0.0 &&
+         cfg.candle_wave_progressive_step_atr > cfg.candle_wave_progressive_trigger_atr)
       {
-         out_error = "Progressive step must be <= trigger (strat4)";
+         out_error = "Progressive step must be <= trigger (CWAVE)";
          return false;
       }
-      if(cfg.strat5_progressive_step_atr > 0.0 && cfg.strat5_progressive_trigger_atr > 0.0 &&
-         cfg.strat5_progressive_step_atr > cfg.strat5_progressive_trigger_atr)
+      if(cfg.trend_reversal_progressive_step_atr > 0.0 && cfg.trend_reversal_progressive_trigger_atr > 0.0 &&
+         cfg.trend_reversal_progressive_step_atr > cfg.trend_reversal_progressive_trigger_atr)
       {
-         out_error = "Progressive step must be <= trigger (strat5)";
+         out_error = "Progressive step must be <= trigger (TRENDREV)";
          return false;
       }
-      if(cfg.strat6_progressive_step_atr > 0.0 && cfg.strat6_progressive_trigger_atr > 0.0 &&
-         cfg.strat6_progressive_step_atr > cfg.strat6_progressive_trigger_atr)
+      if(cfg.outsider_bar_progressive_step_atr > 0.0 && cfg.outsider_bar_progressive_trigger_atr > 0.0 &&
+         cfg.outsider_bar_progressive_step_atr > cfg.outsider_bar_progressive_trigger_atr)
       {
-         out_error = "Progressive step must be <= trigger (strat6)";
+         out_error = "Progressive step must be <= trigger (OUTBAR)";
          return false;
       }
-      if(cfg.strat1_stop_type < 0 || cfg.strat1_stop_type > 3 ||
-         cfg.strat2_stop_type < 0 || cfg.strat2_stop_type > 3 ||
-         cfg.strat3_stop_type < 0 || cfg.strat3_stop_type > 3 ||
-         cfg.strat4_stop_type < 0 || cfg.strat4_stop_type > 3 ||
-         cfg.strat5_stop_type < 0 || cfg.strat5_stop_type > 3 ||
-         cfg.strat6_stop_type < 0 || cfg.strat6_stop_type > 3)
+      if(cfg.adx_stop_type < 0 || cfg.adx_stop_type > 3 ||
+         cfg.dtosc_stop_type < 0 || cfg.dtosc_stop_type > 3 ||
+         cfg.trend_accel_stop_type < 0 || cfg.trend_accel_stop_type > 3 ||
+         cfg.candle_wave_stop_type < 0 || cfg.candle_wave_stop_type > 3 ||
+         cfg.trend_reversal_stop_type < 0 || cfg.trend_reversal_stop_type > 3 ||
+         cfg.outsider_bar_stop_type < 0 || cfg.outsider_bar_stop_type > 3)
       {
          out_error = "Invalid stop type";
          return false;
       }
-      if(cfg.strat1_tp_type < 0 || cfg.strat2_tp_type < 0 ||
-         cfg.strat3_tp_type < 0 || cfg.strat4_tp_type < 0 ||
-         cfg.strat5_tp_type < 0 || cfg.strat6_tp_type < 0)
+      if(cfg.adx_tp_type < 0 || cfg.dtosc_tp_type < 0 ||
+         cfg.trend_accel_tp_type < 0 || cfg.candle_wave_tp_type < 0 ||
+         cfg.trend_reversal_tp_type < 0 || cfg.outsider_bar_tp_type < 0)
       {
          out_error = "Invalid TP type";
          return false;

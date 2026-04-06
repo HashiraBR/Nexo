@@ -84,17 +84,17 @@ private:
       return true;
    }
 
-   bool IsOutsideBar(const MqlRates &current, const MqlRates &previous) const
+   bool IsOutsideBar(const MqlRates &latest, const MqlRates &previous) const
    {
-      return (current.high > previous.high && current.low < previous.low);
+      return (latest.high > previous.high && latest.low < previous.low);
    }
 
-   bool IsFullBody(const MqlRates &current) const
+   bool IsFullBody(const MqlRates &candle) const
    {
-      const double range = current.high - current.low;
+      const double range = candle.high - candle.low;
       if(range <= 0.0)
          return false;
-      const double body = MathAbs(current.close - current.open);
+      const double body = MathAbs(candle.close - candle.open);
       return (body >= range * m_body_ratio);
    }
 
@@ -175,18 +175,18 @@ public:
       if(!ReadIndicators(ma_value, rsi_value))
          return;
 
-      const MqlRates current = history.rates[0];
+      const MqlRates latest_closed = history.rates[0];
       const MqlRates previous = history.rates[1];
 
-      const bool outside = IsOutsideBar(current, previous);
-      const bool full_body = IsFullBody(current);
+      const bool outside = IsOutsideBar(latest_closed, previous);
+      const bool full_body = IsFullBody(latest_closed);
       if(!outside || !full_body)
          return;
 
-      const bool is_green = current.close > current.open;
-      const bool is_red = current.close < current.open;
-      const bool above_ma = (current.close > ma_value * (1.0 + m_safe_range / 100.0));
-      const bool below_ma = (current.close < ma_value * (1.0 - m_safe_range / 100.0));
+      const bool is_green = latest_closed.close > latest_closed.open;
+      const bool is_red = latest_closed.close < latest_closed.open;
+      const bool above_ma = (latest_closed.close > ma_value * (1.0 + m_safe_range / 100.0));
+      const bool below_ma = (latest_closed.close < ma_value * (1.0 - m_safe_range / 100.0));
       const bool rsi_buy = (rsi_value >= m_rsi_buy_low && rsi_value <= m_rsi_buy_high);
       const bool rsi_sell = (rsi_value >= m_rsi_sell_low && rsi_value <= m_rsi_sell_high);
 
@@ -194,15 +194,15 @@ public:
       {
          m_last_signal = 1;
          m_order_type = ORDER_TYPE_BUY_STOP;
-         m_entry_price = current.high;
-         m_stop_price = current.low;
+         m_entry_price = latest_closed.high;
+         m_stop_price = latest_closed.low;
       }
       else if(below_ma && rsi_sell && is_red)
       {
          m_last_signal = -1;
          m_order_type = ORDER_TYPE_SELL_STOP;
-         m_entry_price = current.low;
-         m_stop_price = current.high;
+         m_entry_price = latest_closed.low;
+         m_stop_price = latest_closed.high;
       }
 
       if(m_last_signal != 0)

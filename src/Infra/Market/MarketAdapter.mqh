@@ -29,11 +29,12 @@ public:
    {
       MarketHistory history;
       ArrayResize(history.rates, count);
-      ArraySetAsSeries(history.rates, true);
+      //ArraySetAsSeries(history.rates, true);
       const int copied = CopyRates(symbol, tf, 1, count, history.rates);
       if(copied > 0)
       {
          history.count = copied;
+         ArraySetAsSeries(history.rates, true);
       }
       else
       {

@@ -99,6 +99,38 @@ private:
       return true;
    }
 
+   double EnsurePendingEntryDistance(const int order_type,
+                                  const double entry_raw,
+                                  const MarketSnapshot &market) const
+{
+   const int stop_level_points = (int)SymbolInfoInteger(market.symbol, SYMBOL_TRADE_STOPS_LEVEL);
+
+   if(stop_level_points <= 0)
+      return entry_raw;
+
+   const double stop_level = stop_level_points * market.point;
+   const double buffer = 2 * market.point;
+
+   double entry = entry_raw;
+
+   if(order_type == ORDER_TYPE_BUY_LIMIT)
+   {
+      const double max_allowed = market.bid - stop_level;
+
+      if(entry >= max_allowed)
+         entry = max_allowed - buffer;
+   }
+   else if(order_type == ORDER_TYPE_SELL_LIMIT)
+   {
+      const double min_allowed = market.ask + stop_level;
+
+      if(entry <= min_allowed)
+         entry = min_allowed + buffer;
+   }
+
+   return entry;
+}
+
    bool UpdateData()
    {
       if(!EnsureIndicators())
@@ -141,7 +173,10 @@ private:
                " accelUp=", accel_up,
                " rsiOk=", rsi_ok,
                " priceOk=", price_ok,
-               " atr=", DoubleToString(m_last_atr, 2));
+               " atr=", DoubleToString(m_last_atr, 2),
+               " maShort=", DoubleToString(m_ma_short, 2),
+               " maLong=", DoubleToString(m_ma_long, 2),
+               " rsi=", DoubleToString(m_rsi_value, 2));
       }
       return signal;
    }
@@ -196,6 +231,7 @@ public:
    void Configure(const StrategyContext &ctx)
    {
       StrategyBase::Configure(ctx);
+      m_debug = ctx.debug;
       m_symbol = ctx.symbol;
       m_timeframe = ctx.timeframe;
       m_ma_short_period = ctx.ma_short_period;
@@ -227,10 +263,18 @@ public:
          m_symbol = market.symbol;
       if(m_timeframe == PERIOD_CURRENT)
          m_timeframe = context.timeframe;
-      m_last_low = history.rates[0].low;
-      m_last_high = history.rates[0].high;
-      m_prev_low = history.rates[1].low;
-      m_prev_high = history.rates[1].high;
+      if(history.count < 2)
+         return;
+      //const int latest_idx = history.count - 1;
+      //const int prior_idx = history.count - 2;
+      //const MqlRates latest = history.rates[latest_idx];
+      //const MqlRates prior = history.rates[prior_idx];
+      const MqlRates latest = history.rates[0];
+      const MqlRates prior  = history.rates[1];
+      m_last_low = latest.low;
+      m_last_high = latest.high;
+      m_prev_low = prior.low;
+      m_prev_high = prior.high;
       if(!UpdateData())
          return;
       if(IsBuySignalInternal())
@@ -238,6 +282,7 @@ public:
          m_last_signal = 1;
          m_order_type = ORDER_TYPE_BUY_LIMIT;
          m_entry_price = MathMin(m_last_low, m_prev_low);
+         m_entry_price = EnsurePendingEntryDistance(m_order_type, m_entry_price, market);
          m_stop_price = m_entry_price - (context.sl_atr_factor * m_last_atr);
       }
       else if(IsSellSignalInternal())
@@ -245,7 +290,20 @@ public:
          m_last_signal = -1;
          m_order_type = ORDER_TYPE_SELL_LIMIT;
          m_entry_price = MathMax(m_last_high, m_prev_high);
+         m_entry_price = EnsurePendingEntryDistance(m_order_type, m_entry_price, market);
          m_stop_price = m_entry_price + (context.sl_atr_factor * m_last_atr);
+      }
+      if(m_last_signal != 0)
+      {
+      Print("[DEBUG] TrendAccel signal=", (m_last_signal == 1) ? "BUY" : "SELL",
+            " symbol=", market.symbol,
+            " time=", TimeToString(latest.time, TIME_DATE|TIME_SECONDS),
+            " O=", DoubleToString(latest.open, market.digits),
+            " H=", DoubleToString(latest.high, market.digits),
+            " L=", DoubleToString(latest.low, market.digits),
+            " C=", DoubleToString(latest.close, market.digits),
+            " entry=", DoubleToString(m_entry_price, market.digits),
+            " stop=", DoubleToString(m_stop_price, market.digits));
       }
    }
 

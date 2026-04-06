@@ -167,7 +167,7 @@ public:
          return;
 
       const double atr_value = m_atr.Value();
-      LogInfo("[DEBUG] OnNewCandle: ATR value = " + DoubleToString(atr_value, 4));
+      //LogInfo("[DEBUG] OnNewCandle: ATR value = " + DoubleToString(atr_value, 4));
       EvaluateStrategyExits();
       TrendDirection trend = TREND_NONE;
       if(m_config.trend_filter_enabled)
@@ -387,25 +387,26 @@ private:
    {
       StrategyContext ctx1;
       ctx1.id = "ADX";
-      ctx1.enabled = m_config.strat1_enabled;
-      ctx1.max_orders = m_config.strat1_max_orders;
-      ctx1.pending_ttl_minutes = m_config.strat1_pending_ttl_minutes;
-      ctx1.param1 = m_config.strat1_param1;
-      ctx1.param2 = m_config.strat1_param2;
-      ctx1.param3 = m_config.strat1_param3;
-      ctx1.param4 = m_config.strat1_param4;
-      ctx1.param5 = m_config.strat1_param5;
+      ctx1.enabled = m_config.adx_enabled;
+      ctx1.max_orders = m_config.adx_max_orders;
+      ctx1.pending_ttl_minutes = m_config.adx_pending_ttl_minutes;
+      ctx1.param1 = m_config.adx_param1;
+      ctx1.param2 = m_config.adx_param2;
+      ctx1.param3 = m_config.adx_param3;
+      ctx1.param4 = m_config.adx_param4;
+      ctx1.param5 = m_config.adx_param5;
       ctx1.symbol = m_config.trade_symbol;
       ctx1.timeframe = m_config.execution_timeframe;
-      ctx1.sl_atr_factor = m_config.strat1_sl_atr_factor;
-      ctx1.tp_atr_factor = m_config.strat1_tp_atr_factor;
-      ctx1.stop_type = m_config.strat1_stop_type;
-      ctx1.tp_type = m_config.strat1_tp_type;
-      ctx1.trailing_atr_factor = m_config.strat1_trailing_atr_factor;
-      ctx1.breakeven_trigger_atr = m_config.strat1_breakeven_trigger_atr;
-      ctx1.progressive_trigger_atr = m_config.strat1_progressive_trigger_atr;
-      ctx1.progressive_step_atr = m_config.strat1_progressive_step_atr;
-      ctx1.max_hold_minutes = m_config.strat1_max_hold_minutes;
+      ctx1.sl_atr_factor = m_config.adx_sl_atr_factor;
+      ctx1.tp_atr_factor = m_config.adx_tp_atr_factor;
+      ctx1.stop_type = m_config.adx_stop_type;
+      ctx1.tp_type = m_config.adx_tp_type;
+      ctx1.trailing_atr_factor = m_config.adx_trailing_atr_factor;
+      ctx1.breakeven_trigger_atr = m_config.adx_breakeven_trigger_atr;
+      ctx1.progressive_trigger_atr = m_config.adx_progressive_trigger_atr;
+      ctx1.progressive_step_atr = m_config.adx_progressive_step_atr;
+      ctx1.max_hold_minutes = m_config.adx_max_hold_minutes;
+      ctx1.debug = m_config.enable_debug;
       
       LogInfo("[DEBUG] Strategy ADX: config.enabled=" + (string)ctx1.enabled + ", strategies_csv=" + m_license_state.strategies_csv);
       if(!m_license.IsStrategyAllowed(m_license_state, ctx1.id))
@@ -421,60 +422,61 @@ private:
 
       StrategyContext ctx2;
       ctx2.id = "DTOSC";
-      ctx2.enabled = m_config.strat2_enabled;
-      ctx2.max_orders = m_config.strat2_max_orders;
-      ctx2.pending_ttl_minutes = m_config.strat2_pending_ttl_minutes;
-      ctx2.param1 = m_config.strat2_param1;
-      ctx2.param2 = m_config.strat2_param2;
+      ctx2.enabled = m_config.dtosc_enabled;
+      ctx2.max_orders = m_config.dtosc_max_orders;
+      ctx2.pending_ttl_minutes = m_config.dtosc_pending_ttl_minutes;
+      ctx2.param1 = m_config.dtosc_param1;
+      ctx2.param2 = m_config.dtosc_param2;
       ctx2.symbol = m_config.trade_symbol;
       ctx2.timeframe = m_config.execution_timeframe;
-      ctx2.rsi_period = m_config.strat2_rsi_period;
-      ctx2.stoch_period = m_config.strat2_stoch_period;
-      ctx2.slowing_period = m_config.strat2_slowing_period;
-      ctx2.signal_period = m_config.strat2_signal_period;
-      ctx2.dt_distance = m_config.strat2_dt_distance;
-      ctx2.ma_short_period = m_config.strat2_ma_short_period;
-      ctx2.ma_long_period = m_config.strat2_ma_long_period;
-      ctx2.ma_dist = m_config.strat2_ma_dist;
-      ctx2.debug = m_config.strat2_debug;
-      ctx2.lower_zone = m_config.strat2_lower_zone;
-      ctx2.upper_zone = m_config.strat2_upper_zone;
-      ctx2.sl_atr_factor = m_config.strat2_sl_atr_factor;
-      ctx2.tp_atr_factor = m_config.strat2_tp_atr_factor;
-      ctx2.stop_type = m_config.strat2_stop_type;
-      ctx2.tp_type = m_config.strat2_tp_type;
-      ctx2.trailing_atr_factor = m_config.strat2_trailing_atr_factor;
-      ctx2.breakeven_trigger_atr = m_config.strat2_breakeven_trigger_atr;
-      ctx2.progressive_trigger_atr = m_config.strat2_progressive_trigger_atr;
-      ctx2.progressive_step_atr = m_config.strat2_progressive_step_atr;
-      ctx2.max_hold_minutes = m_config.strat2_max_hold_minutes;
+      ctx2.rsi_period = m_config.dtosc_rsi_period;
+      ctx2.stoch_period = m_config.dtosc_stoch_period;
+      ctx2.slowing_period = m_config.dtosc_slowing_period;
+      ctx2.signal_period = m_config.dtosc_signal_period;
+      ctx2.dt_distance = m_config.dtosc_dt_distance;
+      ctx2.ma_short_period = m_config.dtosc_ma_short_period;
+      ctx2.ma_long_period = m_config.dtosc_ma_long_period;
+      ctx2.ma_dist = m_config.dtosc_ma_dist;
+      ctx2.lower_zone = m_config.dtosc_lower_zone;
+      ctx2.upper_zone = m_config.dtosc_upper_zone;
+      ctx2.sl_atr_factor = m_config.dtosc_sl_atr_factor;
+      ctx2.tp_atr_factor = m_config.dtosc_tp_atr_factor;
+      ctx2.stop_type = m_config.dtosc_stop_type;
+      ctx2.tp_type = m_config.dtosc_tp_type;
+      ctx2.trailing_atr_factor = m_config.dtosc_trailing_atr_factor;
+      ctx2.breakeven_trigger_atr = m_config.dtosc_breakeven_trigger_atr;
+      ctx2.progressive_trigger_atr = m_config.dtosc_progressive_trigger_atr;
+      ctx2.progressive_step_atr = m_config.dtosc_progressive_step_atr;
+      ctx2.max_hold_minutes = m_config.dtosc_max_hold_minutes;
+      ctx2.debug = m_config.enable_debug;
       if(!m_license.IsStrategyAllowed(m_license_state, ctx2.id))
          ctx2.enabled = false;
       m_strategy2.Configure(ctx2);
 
       StrategyContext ctx3;
       ctx3.id = "TACCEL";
-      ctx3.enabled = m_config.strat3_enabled;
-      ctx3.max_orders = m_config.strat3_max_orders;
-      ctx3.pending_ttl_minutes = m_config.strat3_pending_ttl_minutes;
+      ctx3.enabled = m_config.trend_accel_enabled;
+      ctx3.max_orders = m_config.trend_accel_max_orders;
+      ctx3.pending_ttl_minutes = m_config.trend_accel_pending_ttl_minutes;
       ctx3.symbol = m_config.trade_symbol;
       ctx3.timeframe = m_config.execution_timeframe;
-      ctx3.rsi_period = m_config.strat3_rsi_period;
-      ctx3.rsi_upper = m_config.strat3_rsi_upper;
-      ctx3.rsi_lower = m_config.strat3_rsi_lower;
-      ctx3.ma_short_period = m_config.strat3_ma_short_period;
-      ctx3.ma_long_period = m_config.strat3_ma_long_period;
-      ctx3.ma_dist = m_config.strat3_ma_dist;
-      ctx3.accel_dist = m_config.strat3_accel_dist;
-      ctx3.sl_atr_factor = m_config.strat3_sl_atr_factor;
-      ctx3.tp_atr_factor = m_config.strat3_tp_atr_factor;
-      ctx3.stop_type = m_config.strat3_stop_type;
-      ctx3.tp_type = m_config.strat3_tp_type;
-      ctx3.trailing_atr_factor = m_config.strat3_trailing_atr_factor;
-      ctx3.breakeven_trigger_atr = m_config.strat3_breakeven_trigger_atr;
-      ctx3.progressive_trigger_atr = m_config.strat3_progressive_trigger_atr;
-      ctx3.progressive_step_atr = m_config.strat3_progressive_step_atr;
-      ctx3.max_hold_minutes = m_config.strat3_max_hold_minutes;
+      ctx3.rsi_period = m_config.trend_accel_rsi_period;
+      ctx3.rsi_upper = m_config.trend_accel_rsi_upper;
+      ctx3.rsi_lower = m_config.trend_accel_rsi_lower;
+      ctx3.ma_short_period = m_config.trend_accel_ma_short_period;
+      ctx3.ma_long_period = m_config.trend_accel_ma_long_period;
+      ctx3.ma_dist = m_config.trend_accel_ma_dist;
+      ctx3.accel_dist = m_config.trend_accel_accel_dist;
+      ctx3.sl_atr_factor = m_config.trend_accel_sl_atr_factor;
+      ctx3.tp_atr_factor = m_config.trend_accel_tp_atr_factor;
+      ctx3.stop_type = m_config.trend_accel_stop_type;
+      ctx3.tp_type = m_config.trend_accel_tp_type;
+      ctx3.trailing_atr_factor = m_config.trend_accel_trailing_atr_factor;
+      ctx3.breakeven_trigger_atr = m_config.trend_accel_breakeven_trigger_atr;
+      ctx3.progressive_trigger_atr = m_config.trend_accel_progressive_trigger_atr;
+      ctx3.progressive_step_atr = m_config.trend_accel_progressive_step_atr;
+      ctx3.max_hold_minutes = m_config.trend_accel_max_hold_minutes;
+      ctx3.debug = m_config.enable_debug;
       
       LogInfo("[DEBUG] Strategy TACCEL: config.enabled=" + (string)ctx3.enabled + ", strategies_csv=" + m_license_state.strategies_csv);
       if(!m_license.IsStrategyAllowed(m_license_state, ctx3.id))
@@ -490,76 +492,79 @@ private:
 
       StrategyContext ctx4;
       ctx4.id = "CWAVE";
-      ctx4.enabled = m_config.strat4_enabled;
-      ctx4.max_orders = m_config.strat4_max_orders;
-      ctx4.pending_ttl_minutes = m_config.strat4_pending_ttl_minutes;
+      ctx4.enabled = m_config.candle_wave_enabled;
+      ctx4.max_orders = m_config.candle_wave_max_orders;
+      ctx4.pending_ttl_minutes = m_config.candle_wave_pending_ttl_minutes;
       ctx4.symbol = m_config.trade_symbol;
       ctx4.timeframe = m_config.execution_timeframe;
-      ctx4.volume_avg_period = m_config.strat4_volume_avg_period;
-      ctx4.trend_ma_period = m_config.strat4_trend_ma_period;
+      ctx4.volume_avg_period = m_config.candle_wave_volume_avg_period;
+      ctx4.trend_ma_period = m_config.candle_wave_trend_ma_period;
       for(int i = 0; i < CANDLE_PATTERN_COUNT; ++i)
-         ctx4.pattern_configs[i] = m_config.strat4_pattern_configs[i];
-      ctx4.sl_atr_factor = m_config.strat4_sl_atr_factor;
-      ctx4.tp_atr_factor = m_config.strat4_tp_atr_factor;
-      ctx4.stop_type = m_config.strat4_stop_type;
-      ctx4.tp_type = m_config.strat4_tp_type;
-      ctx4.trailing_atr_factor = m_config.strat4_trailing_atr_factor;
-      ctx4.breakeven_trigger_atr = m_config.strat4_breakeven_trigger_atr;
-      ctx4.progressive_trigger_atr = m_config.strat4_progressive_trigger_atr;
-      ctx4.progressive_step_atr = m_config.strat4_progressive_step_atr;
-      ctx4.max_hold_minutes = m_config.strat4_max_hold_minutes;
+         ctx4.pattern_configs[i] = m_config.candle_wave_pattern_configs[i];
+      ctx4.sl_atr_factor = m_config.candle_wave_sl_atr_factor;
+      ctx4.tp_atr_factor = m_config.candle_wave_tp_atr_factor;
+      ctx4.stop_type = m_config.candle_wave_stop_type;
+      ctx4.tp_type = m_config.candle_wave_tp_type;
+      ctx4.trailing_atr_factor = m_config.candle_wave_trailing_atr_factor;
+      ctx4.breakeven_trigger_atr = m_config.candle_wave_breakeven_trigger_atr;
+      ctx4.progressive_trigger_atr = m_config.candle_wave_progressive_trigger_atr;
+      ctx4.progressive_step_atr = m_config.candle_wave_progressive_step_atr;
+      ctx4.max_hold_minutes = m_config.candle_wave_max_hold_minutes;
+      ctx4.debug = m_config.enable_debug;
       if(!m_license.IsStrategyAllowed(m_license_state, ctx4.id))
          ctx4.enabled = false;
       m_strategy4.Configure(ctx4);
 
       StrategyContext ctx5;
       ctx5.id = "TRENDREV";
-      ctx5.enabled = m_config.strat5_enabled;
-      ctx5.max_orders = m_config.strat5_max_orders;
-      ctx5.pending_ttl_minutes = m_config.strat5_pending_ttl_minutes;
+      ctx5.enabled = m_config.trend_reversal_enabled;
+      ctx5.max_orders = m_config.trend_reversal_max_orders;
+      ctx5.pending_ttl_minutes = m_config.trend_reversal_pending_ttl_minutes;
       ctx5.symbol = m_config.trade_symbol;
       ctx5.timeframe = m_config.execution_timeframe;
-      ctx5.volume_avg_period = m_config.strat5_volume_avg_period;
-      ctx5.trend_ma_period = m_config.strat5_trend_ma_period;
-      ctx5.candle_long_percent = m_config.strat5_candle_long_percent;
-      ctx5.candle_max_atr = m_config.strat5_candle_max_atr;
-      ctx5.sl_atr_factor = m_config.strat5_sl_atr_factor;
-      ctx5.tp_atr_factor = m_config.strat5_tp_atr_factor;
-      ctx5.stop_type = m_config.strat5_stop_type;
-      ctx5.tp_type = m_config.strat5_tp_type;
-      ctx5.trailing_atr_factor = m_config.strat5_trailing_atr_factor;
-      ctx5.breakeven_trigger_atr = m_config.strat5_breakeven_trigger_atr;
-      ctx5.progressive_trigger_atr = m_config.strat5_progressive_trigger_atr;
-      ctx5.progressive_step_atr = m_config.strat5_progressive_step_atr;
-      ctx5.max_hold_minutes = m_config.strat5_max_hold_minutes;
+      ctx5.volume_avg_period = m_config.trend_reversal_volume_avg_period;
+      ctx5.trend_ma_period = m_config.trend_reversal_trend_ma_period;
+      ctx5.candle_long_percent = m_config.trend_reversal_candle_long_percent;
+      ctx5.candle_max_atr = m_config.trend_reversal_candle_max_atr;
+      ctx5.sl_atr_factor = m_config.trend_reversal_sl_atr_factor;
+      ctx5.tp_atr_factor = m_config.trend_reversal_tp_atr_factor;
+      ctx5.stop_type = m_config.trend_reversal_stop_type;
+      ctx5.tp_type = m_config.trend_reversal_tp_type;
+      ctx5.trailing_atr_factor = m_config.trend_reversal_trailing_atr_factor;
+      ctx5.breakeven_trigger_atr = m_config.trend_reversal_breakeven_trigger_atr;
+      ctx5.progressive_trigger_atr = m_config.trend_reversal_progressive_trigger_atr;
+      ctx5.progressive_step_atr = m_config.trend_reversal_progressive_step_atr;
+      ctx5.max_hold_minutes = m_config.trend_reversal_max_hold_minutes;
+      ctx5.debug = m_config.enable_debug;
       if(!m_license.IsStrategyAllowed(m_license_state, ctx5.id))
          ctx5.enabled = false;
       m_strategy5.Configure(ctx5);
 
       StrategyContext ctx6;
       ctx6.id = "OUTBAR";
-      ctx6.enabled = m_config.strat6_enabled;
-      ctx6.max_orders = m_config.strat6_max_orders;
-      ctx6.pending_ttl_minutes = m_config.strat6_pending_ttl_minutes;
+      ctx6.enabled = m_config.outsider_bar_enabled;
+      ctx6.max_orders = m_config.outsider_bar_max_orders;
+      ctx6.pending_ttl_minutes = m_config.outsider_bar_pending_ttl_minutes;
       ctx6.symbol = m_config.trade_symbol;
       ctx6.timeframe = m_config.execution_timeframe;
-      ctx6.outsider_ma_period = m_config.strat6_ma_period;
-      ctx6.outsider_rsi_period = m_config.strat6_rsi_period;
-      ctx6.outsider_rsi_buy_low = m_config.strat6_rsi_buy_low;
-      ctx6.outsider_rsi_buy_high = m_config.strat6_rsi_buy_high;
-      ctx6.outsider_rsi_sell_low = m_config.strat6_rsi_sell_low;
-      ctx6.outsider_rsi_sell_high = m_config.strat6_rsi_sell_high;
-      ctx6.outsider_body_ratio = m_config.strat6_body_ratio;
-      ctx6.outsider_safe_range = m_config.strat6_safe_range;
-      ctx6.sl_atr_factor = m_config.strat6_sl_atr_factor;
-      ctx6.tp_atr_factor = m_config.strat6_tp_atr_factor;
-      ctx6.stop_type = m_config.strat6_stop_type;
-      ctx6.tp_type = m_config.strat6_tp_type;
-      ctx6.trailing_atr_factor = m_config.strat6_trailing_atr_factor;
-      ctx6.breakeven_trigger_atr = m_config.strat6_breakeven_trigger_atr;
-      ctx6.progressive_trigger_atr = m_config.strat6_progressive_trigger_atr;
-      ctx6.progressive_step_atr = m_config.strat6_progressive_step_atr;
-      ctx6.max_hold_minutes = m_config.strat6_max_hold_minutes;
+      ctx6.outsider_ma_period = m_config.outsider_bar_ma_period;
+      ctx6.outsider_rsi_period = m_config.outsider_bar_rsi_period;
+      ctx6.outsider_rsi_buy_low = m_config.outsider_bar_rsi_buy_low;
+      ctx6.outsider_rsi_buy_high = m_config.outsider_bar_rsi_buy_high;
+      ctx6.outsider_rsi_sell_low = m_config.outsider_bar_rsi_sell_low;
+      ctx6.outsider_rsi_sell_high = m_config.outsider_bar_rsi_sell_high;
+      ctx6.outsider_body_ratio = m_config.outsider_bar_body_ratio;
+      ctx6.outsider_safe_range = m_config.outsider_bar_safe_range;
+      ctx6.sl_atr_factor = m_config.outsider_bar_sl_atr_factor;
+      ctx6.tp_atr_factor = m_config.outsider_bar_tp_atr_factor;
+      ctx6.stop_type = m_config.outsider_bar_stop_type;
+      ctx6.tp_type = m_config.outsider_bar_tp_type;
+      ctx6.trailing_atr_factor = m_config.outsider_bar_trailing_atr_factor;
+      ctx6.breakeven_trigger_atr = m_config.outsider_bar_breakeven_trigger_atr;
+      ctx6.progressive_trigger_atr = m_config.outsider_bar_progressive_trigger_atr;
+      ctx6.progressive_step_atr = m_config.outsider_bar_progressive_step_atr;
+      ctx6.max_hold_minutes = m_config.outsider_bar_max_hold_minutes;
+      ctx6.debug = m_config.enable_debug;
       if(!m_license.IsStrategyAllowed(m_license_state, ctx6.id))
          ctx6.enabled = false;
       m_strategy6.Configure(ctx6);
@@ -602,6 +607,8 @@ private:
       sl = NormalizeDouble(NormalizePriceToTick(sl), snapshot.digits);
       tp = NormalizeDouble(NormalizePriceToTick(tp), snapshot.digits);
 
+      if(RiskExceeded(ctx.id, entry, sl, snapshot.symbol))
+         return false;
       LogInfo("[DEBUG] OpenMarketPosition: " + ctx.id + " " + ((type == POSITION_TYPE_BUY) ? "BUY" : "SELL") + 
               " entry=" + DoubleToString(entry, (int)snapshot.digits) + 
               " atr=" + DoubleToString(atr, 4) + 
@@ -646,7 +653,7 @@ private:
       if(entry_raw <= 0.0)
          return false;
 
-      const double entry = NormalizeDouble(NormalizePriceToTick(entry_raw), snapshot.digits);
+      double entry = NormalizeDouble(NormalizePriceToTick(entry_raw), snapshot.digits);
       double sl = sl_raw;
       if(sl > 0.0)
          sl = NormalizeDouble(NormalizePriceToTick(sl), snapshot.digits);
@@ -655,11 +662,14 @@ private:
          const bool is_buy = (order_type == ORDER_TYPE_BUY_STOP || order_type == ORDER_TYPE_BUY_LIMIT);
          tp_raw = ComputeTakeProfit(is_buy ? POSITION_TYPE_BUY : POSITION_TYPE_SELL, entry, atr, ctx);
       }
+      entry = EnsurePendingOrderEntryDistance(order_type, entry, snapshot);
       double tp = tp_raw;
       if(tp > 0.0)
          tp = NormalizeDouble(NormalizePriceToTick(tp), snapshot.digits);
 
       if(!ValidatePendingOrderPrices(order_type, entry, sl, tp, snapshot))
+         return false;
+      if(RiskExceeded(ctx.id, entry, sl, snapshot.symbol))
          return false;
 
       const string comment = BuildStrategyCommentWithAtr(ctx.id, atr, TickSize());
@@ -760,6 +770,35 @@ private:
       }
 
       return true;
+   }
+
+   double EnsurePendingOrderEntryDistance(const int order_type,
+                                          const double entry,
+                                          const MarketSnapshot &snapshot) const
+   {
+      const int stop_level_points = (int)SymbolInfoInteger(snapshot.symbol, SYMBOL_TRADE_STOPS_LEVEL);
+      if(stop_level_points <= 0)
+         return entry;
+
+      const double stop_level = stop_level_points * snapshot.point;
+      const double buffer = MathMax(snapshot.point, stop_level * 0.25);
+      double adjusted_entry = entry;
+
+      if(order_type == ORDER_TYPE_BUY_LIMIT)
+      {
+         const double max_allowed = snapshot.bid - stop_level;
+         if(adjusted_entry >= max_allowed)
+            adjusted_entry = max_allowed - buffer;
+      }
+      else if(order_type == ORDER_TYPE_SELL_LIMIT)
+      {
+         const double min_allowed = snapshot.ask + stop_level;
+         if(adjusted_entry <= min_allowed)
+            adjusted_entry = min_allowed + buffer;
+      }
+      if(adjusted_entry <= 0.0)
+         return entry;
+      return NormalizeDouble(NormalizePriceToTick(adjusted_entry), snapshot.digits);
    }
 
    void EvaluateStrategyExits()
@@ -1078,7 +1117,7 @@ private:
       return entry - (ctx.tp_atr_factor * atr);
    }
 
-   double NormalizePriceToTick(const double price)
+   double NormalizePriceToTick(const double price) const
    {
       if(price <= 0.0)
          return price;
@@ -1089,12 +1128,48 @@ private:
       return ticks * tick;
    }
 
-   double TickSize()
+   double TickSize() const
    {
       double tick = SymbolInfoDouble(m_config.trade_symbol, SYMBOL_TRADE_TICK_SIZE);
       if(tick <= 0.0)
          tick = SymbolInfoDouble(m_config.trade_symbol, SYMBOL_POINT);
       return tick;
+   }
+
+   double CalculateRiskAmount(const double entry, const double sl, const string &symbol) const
+   {
+      if(entry <= 0.0 || sl <= 0.0)
+         return 0.0;
+      const double distance = MathAbs(entry - sl);
+      if(distance <= 0.0)
+         return 0.0;
+      double tick = SymbolInfoDouble(symbol, SYMBOL_TRADE_TICK_SIZE);
+      if(tick <= 0.0)
+         tick = SymbolInfoDouble(symbol, SYMBOL_POINT);
+      if(tick <= 0.0)
+         return 0.0;
+      const double ticks = distance / tick;
+      const double tick_value = SymbolInfoDouble(symbol, SYMBOL_TRADE_TICK_VALUE);
+      if(tick_value <= 0.0)
+         return 0.0;
+      return ticks * tick_value * m_config.lot_size;
+   }
+
+   bool RiskExceeded(const string strategy_id, const double entry, const double sl, const string &symbol)
+   {
+      if(m_config.max_trade_risk <= 0.0)
+         return false;
+      const double risk = CalculateRiskAmount(entry, sl, symbol);
+      if(risk <= 0.0)
+         return false;
+      if(risk > m_config.max_trade_risk)
+      {
+         LogWarning("Risk limit exceeded: strategy=" + strategy_id +
+                    " risk=" + DoubleToString(risk, 2) +
+                    " limit=" + DoubleToString(m_config.max_trade_risk, 2));
+         return true;
+      }
+      return false;
    }
 
    bool IsBetterStop(const int type, const double current_sl, const double desired_sl)
@@ -1602,12 +1677,12 @@ private:
               " | Dist=" + DoubleToString(m_config.trend_dist_sm, 2) + "/" +
               DoubleToString(m_config.trend_dist_ml, 2));
       LogInfo("Orders: global=" + (string)m_config.max_orders_global +
-              " | strat1=" + (string)m_config.strat1_max_orders +
-              " | strat2=" + (string)m_config.strat2_max_orders +
-              " | strat3=" + (string)m_config.strat3_max_orders +
-              " | strat4=" + (string)m_config.strat4_max_orders +
-              " | strat5=" + (string)m_config.strat5_max_orders +
-              " | strat6=" + (string)m_config.strat6_max_orders);
+              " | ADX=" + (string)m_config.adx_max_orders +
+              " | DTOSC=" + (string)m_config.dtosc_max_orders +
+              " | TACCEL=" + (string)m_config.trend_accel_max_orders +
+              " | CWAVE=" + (string)m_config.candle_wave_max_orders +
+              " | TRENDREV=" + (string)m_config.trend_reversal_max_orders +
+              " | OUTBAR=" + (string)m_config.outsider_bar_max_orders);
       LogInfo("DailyRisk=" + BoolText(m_config.enable_daily_risk) +
               " | loss=" + DoubleToString(m_config.daily_loss_limit, 2) +
               " | profit=" + DoubleToString(m_config.daily_profit_limit, 2) +
