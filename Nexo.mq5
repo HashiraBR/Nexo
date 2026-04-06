@@ -62,7 +62,7 @@ input bool InpEnableNotifications = true; //Habilitar notificacoes/log
 input bool InpEnableLogging = true; //Habilitar log em arquivo
 input bool InpEnableEmail = false; //Habilitar envio de e-mail
 input bool InpEnablePush = false; //Habilitar push notification
-input bool InpEnableDebug = false; //Habilitar log de debug generalizado
+input bool InpEnableDebug = false; //Habilitar log de debug 
 
 input string InpDividerTimeExit = "==================="; //#### Encerramento por tempo ####
 input bool InpEnableTimeExit = true; //Habilitar encerramento por tempo
@@ -73,7 +73,7 @@ input string InpLicenseKey = "YT0wfGU9MjAzMC0xMi0zMXxzPVdJTiosV0RPKnx0PU0yLE01fG
 input string InpDividerAdx = "===================";  //#### Estrategia ADX ####
 input bool InpAdxEnabled = true;     //Ativar estrategia ADX
 input int InpAdxMaxOrders = 1;       //Maximo de ordens abertas da estrategia ADX
-input int InpAdxPendingTtlMinutes = 60; //Validade das pendentes (min)
+int InpAdxPendingTtlMinutes = 2; //Validade das pendentes (min)
 input int InpAdxMaxHoldMinutes = 0; //Duracao maxima do trade (0 = sem limite)
 input int InpAdxParam1 = 14;         //ADX periodo
 input int InpAdxParam2 = 7;          //ADX step
@@ -92,7 +92,7 @@ input double InpAdxProgressiveStepAtr = 1.0; //ATR de salto do SL
 input string InpDividerDtOsc = "===================";  //#### Estrategia DT Oscillator ####
 input bool InpDtOscEnabled = true;     //Ativar estrategia DT Oscillator
 input int InpDtOscMaxOrders = 1;       //Maximo de ordens abertas da estrategia DT Oscillator
-input int InpDtOscPendingTtlMinutes = 60; //Validade das pendentes (min)
+int InpDtOscPendingTtlMinutes = 2; //Validade das pendentes (min)
 input int InpDtOscMaxHoldMinutes = 0; //Duracao maxima do trade (0 = sem limite)
 input int InpDtOscRsiPeriod = 14;         //RSI periodo
 input int InpDtOscStochPeriod = 14;         //Stoch periodo
@@ -116,7 +116,7 @@ input double InpDtOscProgressiveStepAtr = 1.0; //ATR de salto do SL
 input string InpDividerTrendAccel = "===================";  //#### Estrategia Trend Accelerator ####
 input bool InpTrendAccelEnabled = true;     //Ativar estrategia Trend Accelerator
 input int InpTrendAccelMaxOrders = 1;       //Maximo de ordens abertas da estrategia Trend Accelerator
-input int InpTrendAccelPendingTtlMinutes = 60; //Validade das pendentes (min)
+input int InpTrendAccelPendingTtlMinutes = 2; //Validade das pendentes (min)
 input int InpTrendAccelMaxHoldMinutes = 0; //Duracao maxima do trade (0 = sem limite)
 input int InpTrendAccelRsiPeriod = 14;      //RSI periodo
 input int InpTrendAccelRsiUpper = 70;       //RSI limite superior
@@ -137,7 +137,7 @@ input double InpTrendAccelProgressiveStepAtr = 1.0; //ATR de salto do SL
 input string InpDividerCandleWave = "===================";  //#### Estrategia Candle Wave ####
 input bool InpCandleWaveEnabled = true;     //Ativar estrategia Candle Wave
 input int InpCandleWaveMaxOrders = 1;       //Maximo de ordens abertas da estrategia Candle Wave
-input int InpCandleWavePendingTtlMinutes = 60; //Validade das pendentes (min)
+int InpCandleWavePendingTtlMinutes = 2; //Validade das pendentes (min)
 input int InpCandleWaveMaxHoldMinutes = 0; //Duracao maxima do trade (0 = sem limite)
 input int InpCandleWaveVolumeAvgPeriod = 20; //Periodo da media de volume
 input int InpCandleWaveTrendMaPeriod = 50; //Periodo da EMA de tendencia
@@ -179,7 +179,7 @@ input double InpCandleHammerRedMaxAtr = 0.0; //Hammer Red ATR maximo (0 = sem li
 input string InpDividerTrendReversal = "===================";  //#### Estrategia Trend Reversal ####
 input bool InpTrendReversalEnabled = true;     //Ativar estrategia Trend Reversal
 input int InpTrendReversalMaxOrders = 1;       //Maximo de ordens abertas da estrategia Trend Reversal
-input int InpTrendReversalPendingTtlMinutes = 60; //Validade das pendentes (min)
+int InpTrendReversalPendingTtlMinutes = 2; //Validade das pendentes (min)
 input int InpTrendReversalMaxHoldMinutes = 0; //Duracao maxima do trade (0 = sem limite)
 input int InpTrendReversalVolumeAvgPeriod = 20; //Periodo da media de volume (real)
 input int InpTrendReversalTrendMaPeriod = 50; //Periodo da EMA de tendencia
@@ -197,7 +197,7 @@ input double InpTrendReversalProgressiveStepAtr = 1.0; //ATR de salto do SL
 input string InpDividerOutsiderBar = "===================";  //#### Estrategia Outsider Bar ####
 input bool InpOutsiderBarEnabled = true;     //Ativar estrategia Outsider Bar
 input int InpOutsiderBarMaxOrders = 1;       //Maximo de ordens abertas da estrategia Outsider Bar
-input int InpOutsiderBarPendingTtlMinutes = 60; //Validade das pendentes (min)
+input int InpOutsiderBarPendingTtlMinutes = 2; //Validade das pendentes (min)
 input int InpOutsiderBarMaxHoldMinutes = 0; //Duracao maxima do trade (0 = sem limite)
 input int InpOutsiderBarMaPeriod = 50;      //Periodo da EMA
 input int InpOutsiderBarRsiPeriod = 14;     //RSI periodo
