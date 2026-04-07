@@ -1,8 +1,8 @@
 ﻿param(
-    [string]$TerminalPath = "$env:ProgramFiles\MetaTrader 5\terminal64.exe",
+    [string]$TerminalPath = "$env:ProgramFiles\MetaTrader 5 Terminal\terminal64.exe",
     [string]$InputsDir = "$PSScriptRoot\..\tests\automation\inputs",
     [string]$ReportsDir = "$PSScriptRoot\..\tests\automation\reports",
-    [string]$TesterFilesDir = "$env:APPDATA\MetaQuotes\Terminal\FB9A56D617EDDDFE29EE54EBEFFE96C1\MQL5\Tester\Files",
+    [string]$TesterFilesDir = "$env:APPDATA\Roaming\MetaQuotes\Terminal\FB9A56D617EDDDFE29EE54EBEFFE96C1\MQL5\Profiles\Tester",
     [string]$ExtraTerminalArgs = ""
 )
 

@@ -4,6 +4,7 @@
 
 #include "../Base/StrategyBase.mqh"
 #include "../../Shared/CandlePatterns.mqh"
+#include "../../Shared/TrendDirection.mqh"
 
 class CandleWaveStrategy : public StrategyBase
 {
@@ -18,6 +19,7 @@ private:
    double m_last_atr;
    bool   m_debug;
    int    m_trend_ma_handle;
+   TrendDirection m_market_trend;
 
    void ResetState()
    {
@@ -88,6 +90,22 @@ private:
       return false;
    }
 
+   /*
+   bool ReadTrendEma(double &out_ema)
+   {
+      if(m_trend_ma_period <= 0)
+         return true;
+      if(!EnsureIndicators())
+         return false;
+      double ema_buf[];
+      ArraySetAsSeries(ema_buf, true);
+      if(CopyBuffer(m_trend_ma_handle, 0, 0, 2, ema_buf) != 2)
+         return false;
+      out_ema = ema_buf[1];
+      return true;
+   }
+*/
+
    bool ReadTrendEma(double &out_ema)
    {
       if(m_trend_ma_period <= 0)
@@ -111,6 +129,7 @@ public:
       m_trend_ma_period = 0;
       m_debug = false;
       m_trend_ma_handle = INVALID_HANDLE;
+      m_market_trend = TREND_NONE;
       for(int i = 0; i < CANDLE_PATTERN_COUNT; ++i)
       {
          m_pattern_configs[i].enabled = false;
@@ -123,6 +142,11 @@ public:
    ~CandleWaveStrategy()
    {
       ReleaseIndicators();
+   }
+
+   void SetMarketTrend(const TrendDirection trend)
+   {
+      m_market_trend = trend;
    }
 
    void Configure(const StrategyContext &ctx)
@@ -160,10 +184,6 @@ public:
       if(!VolumeAboveAverage(history.rates, history.count))
          return;
 
-      double ema_trend = 0.0;
-      if(!ReadTrendEma(ema_trend))
-         return;
-
       const MqlRates candle = history.rates[0];
       CandlePattern pattern = PATTERN_NONE;
       if(!DetectPattern(market, candle, pattern))
@@ -171,12 +191,17 @@ public:
 
       const bool is_buy_pattern = IsBuyPatternSignal(pattern);
       const bool is_sell_pattern = IsSellPatternSignal(pattern);
+      double ema_trend = 0.0;
+      if(!ReadTrendEma(ema_trend))
+         return;
       const bool trend_up = (m_trend_ma_period <= 0) ? true : (candle.close > ema_trend);
       const bool trend_down = (m_trend_ma_period <= 0) ? true : (candle.close < ema_trend);
+      const bool allow_buy = true;//(m_market_trend == TREND_UP);
+      const bool allow_sell = true;//(m_market_trend == TREND_DOWN);
 
-      if(is_buy_pattern && trend_up)
+      if(is_buy_pattern && trend_up && allow_buy)
          m_last_signal = 1;
-      else if(is_sell_pattern && trend_down)
+      else if(is_sell_pattern && trend_down && allow_sell)
          m_last_signal = -1;
 
       if(m_debug)

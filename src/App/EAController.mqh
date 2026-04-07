@@ -18,6 +18,7 @@
 #include "../Shared/EaInfo.mqh"
 #include "../Shared/StopTypes.mqh"
 #include "../Shared/TakeProfitTypes.mqh"
+#include "../Shared/TrendDirection.mqh"
 #include "../Strategies/Implementations/AdxStrategy.mqh"
 #include "../Strategies/Implementations/DtStrategy.mqh"
 #include "../Strategies/Implementations/TrendAcceleratorStrategy.mqh"
@@ -177,6 +178,7 @@ public:
             m_last_trend_dir = trend;
          }
       }
+      m_strategy4.SetMarketTrend(trend);
       ExecuteStrategy(m_strategy1, atr_value);
       ExecuteStrategy(m_strategy2, atr_value);
       ExecuteStrategy(m_strategy3, atr_value);
@@ -201,13 +203,6 @@ public:
    }
 
 private:
-   enum TrendDirection
-   {
-      TREND_NONE = 0,
-      TREND_UP = 1,
-      TREND_DOWN = 2
-   };
-
    AppConfig m_config;
    Clock     m_clock;
    bool      m_force_close_done;

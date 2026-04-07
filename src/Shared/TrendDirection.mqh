@@ -1,0 +1,11 @@
+#ifndef EA_TRENDDIRECTION_MQH
+#define EA_TRENDDIRECTION_MQH
+
+enum TrendDirection
+{
+   TREND_NONE = 0,
+   TREND_UP = 1,
+   TREND_DOWN = 2
+};
+
+#endif // EA_TRENDDIRECTION_MQH
