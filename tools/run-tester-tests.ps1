@@ -2,16 +2,21 @@
     [string]$TerminalPath = "$env:ProgramFiles\MetaTrader 5 Terminal\terminal64.exe",
     [string]$InputsDir = "$PSScriptRoot\..\tests\automation\inputs",
     [string]$ReportsDir = "$PSScriptRoot\..\tests\automation\reports",
-    [string]$TesterFilesDir = "$env:APPDATA\Roaming\MetaQuotes\Terminal\FB9A56D617EDDDFE29EE54EBEFFE96C1\MQL5\Profiles\Tester",
+    [string]$TesterFilesDir = "$env:APPDATA\MetaQuotes\Terminal\FB9A56D617EDDDFE29EE54EBEFFE96C1\MQL5\Profiles\Tester",
     [string]$ExtraTerminalArgs = ""
+    
 )
 
 function Resolve-DirectoryPath([string]$path)
 {
     if([string]::IsNullOrWhiteSpace($path))
+    {
         throw "Path cannot be empty."
+    }
     if(Test-Path -Path $path)
+    {
         return (Resolve-Path -LiteralPath $path).ProviderPath
+    }
     return (Resolve-Path -LiteralPath (New-Item -ItemType Directory -LiteralPath $path -Force).FullName).ProviderPath
 }
 
@@ -19,7 +24,9 @@ $InputsDir = Resolve-DirectoryPath $InputsDir
 $ReportsDir = Resolve-DirectoryPath $ReportsDir
 
 if(!(Test-Path -Path $TerminalPath))
+{
     throw "Terminal executable not found at '$TerminalPath'."
+}
 
 $iniFiles = Get-ChildItem -Path $InputsDir -Filter '*.ini' | Sort-Object Name
 if($iniFiles.Count -eq 0)
