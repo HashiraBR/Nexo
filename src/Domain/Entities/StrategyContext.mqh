@@ -47,14 +47,6 @@ public:
    double   progressive_trigger_atr;
    double   progressive_step_atr;
    int      tp_type;
-   int      outsider_ma_period;
-   int      outsider_rsi_period;
-   int      outsider_rsi_buy_low;
-   int      outsider_rsi_buy_high;
-   int      outsider_rsi_sell_low;
-   int      outsider_rsi_sell_high;
-   double   outsider_body_ratio;
-   double   outsider_safe_range;
 };
 
 #endif // EA_STRATEGYCONTEXT_MQH

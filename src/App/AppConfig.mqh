@@ -128,27 +128,6 @@ struct AppConfig
    double   trend_reversal_progressive_step_atr;
    int      trend_reversal_tp_type;
 
-   bool     outsider_bar_enabled;
-   int      outsider_bar_max_orders;
-   int      outsider_bar_pending_ttl_minutes;
-   int      outsider_bar_max_hold_minutes;
-   int      outsider_bar_ma_period;
-   int      outsider_bar_rsi_period;
-   int      outsider_bar_rsi_buy_low;
-   int      outsider_bar_rsi_buy_high;
-   int      outsider_bar_rsi_sell_low;
-   int      outsider_bar_rsi_sell_high;
-   double   outsider_bar_body_ratio;
-   double   outsider_bar_safe_range;
-   double   outsider_bar_sl_atr_factor;
-   double   outsider_bar_tp_atr_factor;
-   int      outsider_bar_stop_type;
-   double   outsider_bar_trailing_atr_factor;
-   double   outsider_bar_breakeven_trigger_atr;
-   double   outsider_bar_progressive_trigger_atr;
-   double   outsider_bar_progressive_step_atr;
-   int      outsider_bar_tp_type;
-
    bool     enable_logging;
    bool     enable_email;
    bool     enable_push;

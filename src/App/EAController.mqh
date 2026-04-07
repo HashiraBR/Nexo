@@ -23,8 +23,6 @@
 #include "../Strategies/Implementations/TrendAcceleratorStrategy.mqh"
 #include "../Strategies/Implementations/CandleWaveStrategy.mqh"
 #include "../Strategies/Implementations/TrendReversalStrategy.mqh"
-#include "../Strategies/Implementations/OutsiderBarStrategy.mqh"
-
 class EAController
 {
 public:
@@ -187,7 +185,6 @@ public:
          ExecuteStrategy(m_strategy4, atr_value);
          ExecuteStrategy(m_strategy5, atr_value);
       }
-      ExecuteStrategy(m_strategy6, atr_value);
    }
 
    void Shutdown()
@@ -233,8 +230,7 @@ private:
    TrendAcceleratorStrategy m_strategy3;
    CandleWaveStrategy m_strategy4;
    TrendReversalStrategy m_strategy5;
-   OutsiderBarStrategy m_strategy6;
-   int m_trend_ma_short_handle;
+    int m_trend_ma_short_handle;
    int m_trend_ma_medium_handle;
    int m_trend_ma_long_handle;
 
@@ -540,34 +536,6 @@ private:
          ctx5.enabled = false;
       m_strategy5.Configure(ctx5);
 
-      StrategyContext ctx6;
-      ctx6.id = "OUTBAR";
-      ctx6.enabled = m_config.outsider_bar_enabled;
-      ctx6.max_orders = m_config.outsider_bar_max_orders;
-      ctx6.pending_ttl_minutes = m_config.outsider_bar_pending_ttl_minutes;
-      ctx6.symbol = m_config.trade_symbol;
-      ctx6.timeframe = m_config.execution_timeframe;
-      ctx6.outsider_ma_period = m_config.outsider_bar_ma_period;
-      ctx6.outsider_rsi_period = m_config.outsider_bar_rsi_period;
-      ctx6.outsider_rsi_buy_low = m_config.outsider_bar_rsi_buy_low;
-      ctx6.outsider_rsi_buy_high = m_config.outsider_bar_rsi_buy_high;
-      ctx6.outsider_rsi_sell_low = m_config.outsider_bar_rsi_sell_low;
-      ctx6.outsider_rsi_sell_high = m_config.outsider_bar_rsi_sell_high;
-      ctx6.outsider_body_ratio = m_config.outsider_bar_body_ratio;
-      ctx6.outsider_safe_range = m_config.outsider_bar_safe_range;
-      ctx6.sl_atr_factor = m_config.outsider_bar_sl_atr_factor;
-      ctx6.tp_atr_factor = m_config.outsider_bar_tp_atr_factor;
-      ctx6.stop_type = m_config.outsider_bar_stop_type;
-      ctx6.tp_type = m_config.outsider_bar_tp_type;
-      ctx6.trailing_atr_factor = m_config.outsider_bar_trailing_atr_factor;
-      ctx6.breakeven_trigger_atr = m_config.outsider_bar_breakeven_trigger_atr;
-      ctx6.progressive_trigger_atr = m_config.outsider_bar_progressive_trigger_atr;
-      ctx6.progressive_step_atr = m_config.outsider_bar_progressive_step_atr;
-      ctx6.max_hold_minutes = m_config.outsider_bar_max_hold_minutes;
-      ctx6.debug = m_config.enable_debug;
-      if(!m_license.IsStrategyAllowed(m_license_state, ctx6.id))
-         ctx6.enabled = false;
-      m_strategy6.Configure(ctx6);
    }
 
    void ExecuteStrategy(Strategy &strategy, const double atr_value)
@@ -952,11 +920,6 @@ private:
          out_ctx = m_strategy5.GetContext();
          return true;
       }
-      if(strategy_id == "OUTBAR")
-      {
-         out_ctx = m_strategy6.GetContext();
-         return true;
-      }
       return false;
    }
 
@@ -975,8 +938,6 @@ private:
          return m_strategy4.ShouldClose(ticket, snapshot, history);
       if(strategy_id == "TRENDREV")
          return m_strategy5.ShouldClose(ticket, snapshot, history);
-      if(strategy_id == "OUTBAR")
-         return m_strategy6.ShouldClose(ticket, snapshot, history);
       return false;
    }
 
@@ -1019,11 +980,7 @@ private:
       double desired_sl = sl;
       double desired_tp = tp;
 
-      if(ctx.id == "OUTBAR" && ctx.stop_type == STOP_FIXED)
-      {
-         desired_sl = sl;
-      }
-      else if(ctx.stop_type == STOP_FIXED)
+      if(ctx.stop_type == STOP_FIXED)
       {
          desired_sl = ComputeFixedStop(type, entry, atr, ctx.sl_atr_factor);
       }
@@ -1681,8 +1638,7 @@ private:
               " | DTOSC=" + (string)m_config.dtosc_max_orders +
               " | TACCEL=" + (string)m_config.trend_accel_max_orders +
               " | CWAVE=" + (string)m_config.candle_wave_max_orders +
-              " | TRENDREV=" + (string)m_config.trend_reversal_max_orders +
-              " | OUTBAR=" + (string)m_config.outsider_bar_max_orders);
+              " | TRENDREV=" + (string)m_config.trend_reversal_max_orders);
       LogInfo("DailyRisk=" + BoolText(m_config.enable_daily_risk) +
               " | loss=" + DoubleToString(m_config.daily_loss_limit, 2) +
               " | profit=" + DoubleToString(m_config.daily_profit_limit, 2) +
@@ -1698,8 +1654,7 @@ private:
               " | DTOSC=" + BoolText(m_strategy2.IsEnabled()) +
               " | TACCEL=" + BoolText(m_strategy3.IsEnabled()) +
               " | CWAVE=" + BoolText(m_strategy4.IsEnabled()) +
-              " | TRENDREV=" + BoolText(m_strategy5.IsEnabled()) +
-              " | OUTBAR=" + BoolText(m_strategy6.IsEnabled()));
+              " | TRENDREV=" + BoolText(m_strategy5.IsEnabled()));
    }
 
    void LogLicenseDetails(const string status)

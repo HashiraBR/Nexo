@@ -194,28 +194,6 @@ input double InpTrendReversalBreakEvenTriggerAtr = 1.0; //ATR necessario para br
 input double InpTrendReversalProgressiveTriggerAtr = 1.8; //ATR para salto progressivo
 input double InpTrendReversalProgressiveStepAtr = 1.0; //ATR de salto do SL
 
-input string InpDividerOutsiderBar = "===================";  //#### Estrategia Outsider Bar ####
-input bool InpOutsiderBarEnabled = true;     //Ativar estrategia Outsider Bar
-input int InpOutsiderBarMaxOrders = 1;       //Maximo de ordens abertas da estrategia Outsider Bar
-input int InpOutsiderBarPendingTtlMinutes = 2; //Validade das pendentes (min)
-input int InpOutsiderBarMaxHoldMinutes = 0; //Duracao maxima do trade (0 = sem limite)
-input int InpOutsiderBarMaPeriod = 50;      //Periodo da EMA
-input int InpOutsiderBarRsiPeriod = 14;     //RSI periodo
-input int InpOutsiderBarRsiBuyLow = 55;     //RSI compra minimo
-input int InpOutsiderBarRsiBuyHigh = 70;    //RSI compra maximo
-input int InpOutsiderBarRsiSellLow = 30;    //RSI venda minimo
-input int InpOutsiderBarRsiSellHigh = 45;   //RSI venda maximo
-input double InpOutsiderBarBodyRatio = 0.6; //Corpo minimo (0-1) do candle
-input double InpOutsiderBarSafeRange = 0.25; //Distancia minima da EMA (%)
-input double InpOutsiderBarSLAtrFactor = 1.5; //Fator ATR para SL
-input double InpOutsiderBarTPAtrFactor = 2.5; //Fator ATR para TP
-input StopType InpOutsiderBarStopType = STOP_FIXED; //Fixo/Trailing/BreakEven/Progressivo
-input TakeProfitType InpOutsiderBarTPType = TP_FIXED; //Tipo de TP
-input double InpOutsiderBarTrailingAtr = 1.0; //Fator ATR do trailing
-input double InpOutsiderBarBreakEvenTriggerAtr = 1.0; //ATR necessario para break-even
-input double InpOutsiderBarProgressiveTriggerAtr = 1.8; //ATR para salto progressivo
-input double InpOutsiderBarProgressiveStepAtr = 1.0; //ATR de salto do SL
-
 input string InpDividerTester = "==================="; //#### Tester ####
 input TesterOptimizationCriterion InpTesterCriterion = TESTER_MEAN_SD; //Criterio de otimizacao
 input double InpTesterDrawdownMin = 0.9; //Restricao de drawdown (0-1)
@@ -376,26 +354,6 @@ int OnInit()
    config.trend_reversal_progressive_trigger_atr = InpTrendReversalProgressiveTriggerAtr;
    config.trend_reversal_progressive_step_atr = InpTrendReversalProgressiveStepAtr;
 
-   config.outsider_bar_enabled       = InpOutsiderBarEnabled;
-   config.outsider_bar_max_orders    = InpOutsiderBarMaxOrders;
-   config.outsider_bar_pending_ttl_minutes = InpOutsiderBarPendingTtlMinutes;
-   config.outsider_bar_max_hold_minutes = InpOutsiderBarMaxHoldMinutes;
-   config.outsider_bar_ma_period     = InpOutsiderBarMaPeriod;
-   config.outsider_bar_rsi_period    = InpOutsiderBarRsiPeriod;
-   config.outsider_bar_rsi_buy_low   = InpOutsiderBarRsiBuyLow;
-   config.outsider_bar_rsi_buy_high  = InpOutsiderBarRsiBuyHigh;
-   config.outsider_bar_rsi_sell_low  = InpOutsiderBarRsiSellLow;
-   config.outsider_bar_rsi_sell_high = InpOutsiderBarRsiSellHigh;
-   config.outsider_bar_body_ratio    = InpOutsiderBarBodyRatio;
-   config.outsider_bar_safe_range    = InpOutsiderBarSafeRange;
-   config.outsider_bar_sl_atr_factor = InpOutsiderBarSLAtrFactor;
-   config.outsider_bar_tp_atr_factor = InpOutsiderBarTPAtrFactor;
-   config.outsider_bar_stop_type     = InpOutsiderBarStopType;
-   config.outsider_bar_tp_type       = InpOutsiderBarTPType;
-   config.outsider_bar_trailing_atr_factor = InpOutsiderBarTrailingAtr;
-   config.outsider_bar_breakeven_trigger_atr = InpOutsiderBarBreakEvenTriggerAtr;
-   config.outsider_bar_progressive_trigger_atr = InpOutsiderBarProgressiveTriggerAtr;
-   config.outsider_bar_progressive_step_atr = InpOutsiderBarProgressiveStepAtr;
 
    config.lot_size             = InpLotSize;
    config.enable_notifications = InpEnableNotifications;
